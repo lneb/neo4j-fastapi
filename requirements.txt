@@ -4,3 +4,5 @@ pytest==7.1.2
 neo4j
 pydantic
 fastapi
+uvicorn[standard]
+

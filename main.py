@@ -1,16 +1,23 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from neo4j import GraphDatabase
+from neo4j import GraphDatabase, basic_auth
 import os
 
 app = FastAPI()
 
+# Sandbox
+URI = "bolt://44.200.248.38:7687"
+AUTH = basic_auth("neo4j", "buckles-forearm-interaction")
 
-URI = "bolt://localhost:7687"
-AUTH = ("neo4j", "123456789")
+# Local
+# URI = "bolt://localhost:7687"
+# AUTH = ("neo4j", "123456789")
 
 with GraphDatabase.driver(URI, auth=AUTH) as driver:
     driver.verify_connectivity()
+
+
+
 
 
 class EmployeeCreate(BaseModel):
@@ -52,3 +59,9 @@ def get_all_employees():
                 "emp_id": record["emp_id"]
             })
     return employees
+
+
+# import uvicorn
+
+# if __name__ == "__main__":
+#     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
