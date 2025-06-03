@@ -2,16 +2,16 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ '**' ]
 
 env:
-  AWS_REGION: eu-north-1                 # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: ilies/mlops           # set this to your Amazon ECR repository name
-  ECS_SERVICE: mlops_service                 # set this to your Amazon ECS service name
-  ECS_CLUSTER: MlopsClusterIB                 # set this to your Amazon ECS cluster name
-  ECS_TASK_DEFINITION: mlops_catboost # set this to the path to your Amazon ECS task definition
+  AWS_REGION: us-east-1                 # set this to your preferred AWS region, e.g. us-west-1
+  ECR_REPOSITORY: ilies/neo4jfastapi           # set this to your Amazon ECR repository name
+  ECS_SERVICE: neo4jfastapiTask-service-4v8679hd                # set this to your Amazon ECS service name
+  ECS_CLUSTER: neo4jfastapiCluster                 # set this to your Amazon ECS cluster name
+  ECS_TASK_DEFINITION: neo4jfastapiTask # set this to the path to your Amazon ECS task definition
                                                # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: mlops_catboost           # set this to the name of the container in the
+  CONTAINER_NAME: Neo4jFastAPIContainer           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
                      # containerDefinitions section of your task definition
 
