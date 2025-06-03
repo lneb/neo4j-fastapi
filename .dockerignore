@@ -1,0 +1,5 @@
+readme.md
+.git*
+/venv
+/__pycache__
+.csv*
