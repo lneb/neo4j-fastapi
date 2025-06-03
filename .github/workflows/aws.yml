@@ -6,7 +6,7 @@ on:
 
 env:
   AWS_REGION: us-east-1                 # set this to your preferred AWS region, e.g. us-west-1
-  ECR_REPOSITORY: ilies/neo4jfastapi         # set this to your Amazon ECR repository name
+  ECR_REPOSITORY: ilias/neo4jfastapi         # set this to your Amazon ECR repository name
   ECS_SERVICE: neo4jfastapiTask-service-4v8679hd                # set this to your Amazon ECS service name
   ECS_CLUSTER: neo4jfastapiCluster                 # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: neo4jfastapiTask # set this to the path to your Amazon ECS task definition
