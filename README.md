@@ -1,87 +1,142 @@
-Neo4j - FastAPI Project / Ilias BENLARBI
 
----------------------------------
-FastAPI
+#  Neo4j - FastAPI Project  
+**Author: Ilias BENLARBI**
 
-FastAPI creates 2 API to communicate with a distant Neo4j database
+---
 
-How to run : uvicorn main:app --reload     
-http://127.0.0.1:8000/docs
+##  FastAPI
 
+This project uses FastAPI to create two RESTful API endpoints that interact with a remote Neo4j database.
 
-- POST /employee CREATE EMPLOYEE
-{
-  "name": "string",
-  "emp_id": 0
-}
+###  How to Run the Application
 
-- GET /employees Get All Employees
+```bash
+uvicorn main:app --reload
+```
 
+📄 API Documentation: [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
----------------------------------
-Docker
+### 📡 Available Endpoints
 
-Docker is used to create images of FastAPI and host it on DockerHub
+- **POST** `/employee` – Create an employee  
+  Request body:
+  ```json
+  {
+    "name": "string",
+    "emp_id": 0
+  }
+  ```
 
-Commands : 
+- **GET** `/employees` – Retrieve all employees
+
+---
+
+##  Docker
+
+Docker is used to containerize the FastAPI application and host it on DockerHub.
+
+###  Commands
+
+```bash
+# Authenticate with DockerHub
 docker login
+
+# Build the Docker image
 docker build -t neo4jfastapi .
+
+# Run the container locally
 docker run -it --rm -p 8000:8000 neo4jfastapi
+
+# Tag the image for DockerHub
 docker tag neo4jfastapi:latest lneb/neo4jfastapi
+
+# Push the image to DockerHub
 docker push lneb/neo4jfastapi:latest
+```
 
----------------------------------
-AWS
+---
 
-AWS is used to host FASTAPI Solution 
+##  AWS Deployment
 
+AWS is used to deploy and host the FastAPI container.
 
-IAM :
-Create a user with the right credentials (ECR & ECS)
-Generate an access key (3rd party key)
+###  IAM (Identity and Access Management)
 
-ECR: 
-Create a referential
+- Create a user with permissions for **ECR** and **ECS**
+- Generate access credentials (Access Key ID and Secret Access Key)
 
-ECS:
-Create a cluster
-Create a task
-Create a role
-(make sure the right port is open in order to run FastAPI)
----------------------------------
-Git
+###  ECR (Elastic Container Registry)
 
-Git is used to run pipelines with actions.
-CICD yaml is used to generate a Docker image from main.py and to send it to DockerHub
-AWS yaml is used to link the lastest docker image and deploy it via ECS.
+- Create a Docker image repository to store container images
 
-When a git push is made, CICD and after AWS start.
+###  ECS (Elastic Container Service)
 
+- Create a **cluster**
+- Define a **task definition**
+- Create a **service**
+- Configure an IAM **role**
+- Ensure **port 8000** is open in the security group for external access
 
-Secrets :
-- AWS USER,PWD
-- DOCKER USER,PWD, REPO NAME
+---
 
+##  GitHub Actions – CI/CD
 
-Actions : 
+This project uses GitHub Actions to automate the CI/CD pipeline and AWS deployment.
 
+There are two workflows:
 
-CI-CD YAML
-	- Activation on git push
-	- jobs : 
-		CI : 
-			- install linux
-			- install python and dependencies
-			- check code with black and lint
-		CD : 
-			- Docker login
-			- Docker build with timestamp
-			- Docker push
+- **CI/CD Workflow** (`ci-cd.yaml`)  
+  Builds and pushes the Docker image to DockerHub.
 
-AWS YAML 
-	- Activation on git push
-	- AWS Login (AWS Key_ID, Secret_Key and region)
-	- Build, tag, and push image from DockerHub to Amazon ECR
-	- Download the task definition
-	- Link the image ID to the task
-	- Deploy to ECS
+- **AWS Deployment Workflow** (`aws.yaml`)  
+  Pulls the latest Docker image and deploys it to ECS.
+
+###  Required GitHub Secrets
+
+- `AWS_USER`, `AWS_PWD`
+- `DOCKER_USER`, `DOCKER_PWD`, `REPO_NAME`
+
+---
+
+###  CI/CD Workflow Details (`.github/workflows/ci-cd.yaml`)
+
+Triggered on every `git push`.
+
+#### Jobs:
+
+- **CI**:
+  - Set up a Linux environment
+  - Install Python and dependencies
+  - Format code with `black`
+  - Lint code for errors
+
+- **CD**:
+  - Login to DockerHub
+  - Build Docker image with timestamp
+  - Push image to DockerHub
+
+---
+
+###  AWS Deployment Workflow Details (`.github/workflows/aws.yaml`)
+
+Also triggered on `git push`.
+
+Steps include:
+
+- Login to AWS using GitHub Secrets
+- Pull latest Docker image from DockerHub
+- Build, tag, and push image to ECR
+- Update ECS task definition with new image ID
+- Deploy updated task to ECS cluster
+
+---
+
+##  Summary
+
+This project demonstrates a full deployment workflow from development to production using:
+
+- **FastAPI** for backend API
+- **Neo4j** for the graph database
+- **Docker** for containerization
+- **AWS (ECR & ECS)** for cloud deployment
+- **GitHub Actions** for CI/CD automation
