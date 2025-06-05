@@ -1,4 +1,4 @@
-from fastapi import FastAPI #, HTTPException
+from fastapi import FastAPI , HTTPException
 from pydantic import BaseModel
 from neo4j import GraphDatabase, basic_auth
 
@@ -26,13 +26,13 @@ class EmployeeCreate(BaseModel):
 @app.post("/employee")
 def create_employee(employee: EmployeeCreate):
     with driver.session(database="test") as session:
-        # # Check if emp_id already exists
-        # result = session.run(
-        #     "MATCH (e:Employee {emp_id: $emp_id}) RETURN e",
-        #     emp_id=employee.emp_id
-        # )
-        # if result.single():
-        #     raise HTTPException(status_code=400, detail="Employee ID already exists")
+        # Check if emp_id already exists
+        result = session.run(
+            "MATCH (e:Employee {emp_id: $emp_id}) RETURN e",
+            emp_id=employee.emp_id
+        )
+        if result.single():
+            raise HTTPException(status_code=400, detail="Employee ID already exists")
 
         # Create the Employee node
         session.run(
