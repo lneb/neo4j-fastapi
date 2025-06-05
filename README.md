@@ -140,3 +140,4 @@ This project demonstrates a full deployment workflow from development to product
 - **Docker** for containerization
 - **AWS (ECR & ECS)** for cloud deployment
 - **GitHub Actions** for CI/CD automation
+ 
