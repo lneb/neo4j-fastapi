@@ -58,21 +58,21 @@ def get_all_employees():
     return employees
 
 
-# @app.delete("/employee/{emp_id}")
-# def delete_employee(emp_id: int):
-#     with driver.session(database="employee") as session:
-#         # Vérifie si l'employé existe
-#         result = session.run(
-#             "MATCH (e:Employee {emp_id: $emp_id}) RETURN e",
-#             emp_id=emp_id
-#         )
-#         if not result.single():
-#             raise HTTPException(status_code=404, detail="Employee not found")
+@app.delete("/employee/{emp_id}")
+def delete_employee(emp_id: int):
+    with driver.session(database="employee") as session:
+        # Vérifie si l'employé existe
+        result = session.run(
+            "MATCH (e:Employee {emp_id: $emp_id}) RETURN e",
+            emp_id=emp_id
+        )
+        if not result.single():
+            raise HTTPException(status_code=404, detail="Employee not found")
 
-#         # Supprime le noeud Employee
-#         session.run(
-#             "MATCH (e:Employee {emp_id: $emp_id}) DELETE e",
-#             emp_id=emp_id
-#         )
+        # Supprime le noeud Employee
+        session.run(
+            "MATCH (e:Employee {emp_id: $emp_id}) DELETE e",
+            emp_id=emp_id
+        )
 
-#     return {"message": f"Employee with ID {emp_id} deleted"}
+    return {"message": f"Employee with ID {emp_id} deleted"}
