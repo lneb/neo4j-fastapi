@@ -76,4 +76,3 @@ def get_all_employees():
 #         )
 
 #     return {"message": f"Employee with ID {emp_id} deleted"}
-# 
