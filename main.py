@@ -6,8 +6,8 @@ from neo4j import GraphDatabase, basic_auth
 app = FastAPI()
 
 # Sandbox
-URI = "bolt://13.220.196.40:7687"
-AUTH = basic_auth("neo4j", "characteristic-faults-raincoats")
+URI = "bolt://44.200.9.221:7687"
+AUTH = basic_auth('neo4j', 'explosions-warning-gravity')
 
 # Local
 # URI = "bolt://localhost:7687"
